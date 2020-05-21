@@ -4,5 +4,6 @@ Simple python script to convert iTerm color schemes into Windows Terminal compat
 
 ## Usage
 
-    ```bash
-    ```
+```bash
+python3 iTerm2WinTerm.py <iTerm color scheme> [--out <output JSON location>]
+```
