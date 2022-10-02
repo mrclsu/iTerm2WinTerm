@@ -5,6 +5,10 @@ import json
 import re
 from sys import argv
 
+itermColorsRegex = re.compile('(.+).itermcolors')
+jsonRegex = re.compile('(.+).json')
+arvgl = len(argv)
+
 def itermKeyToWinKey(iterm_key):
     itermToWinDict = {
         'Ansi 0 Color'    : 'black',
@@ -38,15 +42,12 @@ def printUsage():
     print("usage: iTerm2WinTerm.py <iTerm color scheme> [--out <output JSON location>]")
     exit(0)
 
-itermColorsRegex = re.compile('(.+).itermcolors')
-jsonRegex = re.compile('(.+).json')
-
 def checkArgs():
-    if len(argv) != 2 and len(argv) != 4:
+    if arvgl != 2 and arvgl != 4:
         printUsage()
     if itermColorsRegex.fullmatch(argv[1]) == None:
         printUsage()
-    if len(argv) == 4 and argv[2] != '--out':
+    if arvgl == 4 and argv[2] != '--out':
         printUsage()
 
 def main():
@@ -77,7 +78,7 @@ def main():
             outputDict[winKey] = rgbToHex(colorDict['Red Component'], colorDict['Green Component'], colorDict['Blue Component'])
     
     prettyJson = json.dumps(outputDict, indent=4)
-    if len(argv) == 4:
+    if arvgl == 4:
         outFileName = argv[3]
         if jsonRegex.fullmatch(outFileName) == None: outFileName += '.json'
         try:
